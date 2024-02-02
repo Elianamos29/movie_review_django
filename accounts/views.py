@@ -6,8 +6,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.shortcuts import redirect
 from django.db import IntegrityError
+from django.contrib.auth.decorators import login_required
 
-# Create your views here.
+
 def signupaccount(request):
     if request.method == 'GET':
         return render(request, 'signupaccount.html', {'form': UserCreateForm})
@@ -28,6 +29,7 @@ def signupaccount(request):
             return render(request, 'signupaccount.html', {'form': UserCreateForm,
                                                           'error': 'Passwords do not match'})
 
+@login_required
 def logoutaccount(request):
     logout(request)
     return redirect('index')
